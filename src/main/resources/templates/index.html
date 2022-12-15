@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body>
+	<div class="container">
+		<h1 class="logo" style="margin-bottom: 64px;">PRICE CHECKER</h1>
+		<h2 style="margin-bottom: 32px;">Личный кабинет</h2>
+		<p style="margin-bottom: 32px;">Создайте аккаунт, чтобы добавлять товары в избранное, а также 
+		отслеживать цены на выбранные товары и получать оповещение, когда 
+		стоимость упала до определённого значения.</p>
+		<div style="margin-bottom: 64px;">
+			<a href="#">Войти</a>
+			<a href="#">Зарегистрироваться</a>
+		</div>
+		<h2 style="margin-bottom: 32px;">Как это работает?</h2>
+		<p style="margin-bottom: 32px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra consectetur mollis. Nulla facilisi. Phasellus ultricies nulla sit amet tortor pretium facilisis. Curabitur vitae fermentum quam. Etiam convallis eros dolor, vel scelerisque neque auctor quis. Sed venenatis condimentum urna quis egestas. In vitae ligula varius, eleifend enim nec, ornare diam. Aenean libero orci, varius eu ipsum a, feugiat feugiat enim. Duis felis sapien, aliquam vitae scelerisque id, accumsan non nibh.</p>
+		<div style="position: relative; max-width: 512px; margin-bottom: 64px;">
+			<input id="searchbar" type="text" class="form-control" placeholder="Введите название товара">
+			<button id="searchbar-button"><i class="bi bi-search"></i></button>
+		</div>
+		<div id="result">
+			<div class="result-item">
+				<img class="item-photo" th:src="@{/images/videocard.jpg}"/>
+				<div class="result-item__info">
+					<a class="item-name" href="#">Видеокарта Palit GeForce GTX 1660 SUPER Gaming Pro [NE6166S018J9-1160A-1] [PCI-E 3.0, 6 ГБ GDDR6, 192 бит, DVI-D, DisplayPort, HDMI, GPU 1530 МГц]</a>
+					<div class="result-item__info__bottom">
+						<button class="item-favorite"><i class="bi bi-star"></i></button>
+						<img th:src="@{/images/dns.png}" class="item-logo"/>
+						<h3 class="item-price">19 999р</h3>
+					</div>
+				</div>
+			</div>
+
+			<div class="result-item">
+				<img class="item-photo" th:src="@{/images/fridge.jpg}"/>
+				<div class="result-item__info">
+					<a class="item-name" href="#">Холодильник двухкамерный Beko B5RCNK403ZWB Total No Frost</a>
+					<div class="result-item__info__bottom">
+						<button class="item-favorite"><i class="bi bi-star-fill"></i></button>
+						<img th:src="@{/images/regard.png}" class="item-logo"/>
+						<h3 class="item-price">44 990р</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="page-mask" style="display: none;"></div>
+	<div id="loading-spinner" class="spinner-border text-warning" role="status" style="display: none;">
+		<span class="visually-hidden">Loading...</span>
+	</div>
+</body>
+<footer>
+
+</footer>
+<th:block th:replace="~{fragments/scripts}"></th:block>
+<html>
