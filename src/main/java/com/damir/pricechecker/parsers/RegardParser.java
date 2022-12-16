@@ -11,11 +11,11 @@ import org.openqa.selenium.WebDriver;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DNSParser extends Parser{
+public class RegardParser extends Parser{
 
 
-    public DNSParser(WebDriver webDriver) {
-        super("https://www.dns-shop.ru", "https://www.dns-shop.ru/search/?q=", "+", webDriver);
+    public RegardParser(WebDriver webDriver) {
+        super("https://www.regard.ru/", "https://www.regard.ru/catalog?search=", "%20", webDriver);
     }
 
     @Override
@@ -25,38 +25,33 @@ public class DNSParser extends Parser{
         webDriver.get(URL + queryParameter);
 
         //Scrolling page to load product photos
-        try{
+/*        try{
             for(int i = 0; i < 5; i++) {
                 ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(0,500)");
                 Thread.sleep(150);
             }
         }catch(InterruptedException e) {
             //TODO
-        }
+        }*/
 
         //Parsing document
         Document doc = Jsoup.parse(webDriver.getPageSource());
         try {
-            Elements htmlItems = doc.getElementsByClass("catalog-products").first().children();
+            Elements htmlItems = doc.getElementsByClass("rendererWrapper").first().firstElementChild().firstElementChild().children();
             for (int i = 0; i < MAX_COUNT; i++) {
                 Element htmlItem = htmlItems.get(i);
                 String itemURL = domain + htmlItem.getElementsByTag("a").first().attr("href");
-                String itemPhotoURL = htmlItem.getElementsByClass("catalog-product__image-link").first()
-                        .getElementsByTag("picture").first().children().get(2).attr("src");
-                String itemName = htmlItem.getElementsByClass("catalog-product__name").first()
-                        .firstElementChild().text();
+                String itemPhotoURL = domain + htmlItem.getElementsByTag("img").first().attr("src");
+                String itemName = htmlItem.getElementsByTag("h6").first().attr("title");
 
                 long itemPrice;
-                if (htmlItem.getElementsByClass("product-buy__price").first() != null) {
-                    String itemPriceString = htmlItem.getElementsByClass("product-buy__price").first().firstChild().toString();
-                    //Remove all characters, keeping only numbers
-                    itemPriceString = itemPriceString.replaceAll("[^\\d.]", "");
-                    itemPrice = Long.parseLong(itemPriceString);
-                } else {
-                    itemPrice = NULL_PRICE;
-                }
 
-                Item item = new Item(itemURL, itemPhotoURL, itemName, itemPrice, Item.Shop.DNS);
+                String itemPriceString = htmlItem.firstElementChild().child(1).child(1).getElementsByTag("span").first().text();
+                //Remove all characters, keeping only numbers
+                itemPriceString = itemPriceString.replaceAll("[^\\d.]", "");
+                itemPrice = Long.parseLong(itemPriceString);
+
+                Item item = new Item(itemURL, itemPhotoURL, itemName, itemPrice, Item.Shop.REGARD);
                 itemList.add(item);
             }
             return itemList;

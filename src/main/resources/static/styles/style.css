@@ -158,14 +158,18 @@ h6.underline-black{
 }
 
 .item-photo {
+    min-width: 160px;
     width: 160px;
-    height: auto;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .result-item__info {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
+    flex: 1;
 }
 
 .result-item__info > a {
@@ -178,7 +182,7 @@ h6.underline-black{
 
 .result-item__info__bottom {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: flex-end;
     align-items: flex-end;
     gap: 32px;
@@ -223,6 +227,11 @@ h6.underline-black{
 	}
 
 	.result-item {
-	    height: 384px;
+	    height: 288px;
 	}
+
+	.item-photo {
+        min-width: 80px;
+        width: 80px;
+    }
 }

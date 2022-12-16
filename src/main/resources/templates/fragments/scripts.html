@@ -1,2 +1,14 @@
 <script src="https://code.jquery.com/jquery-3.6.2.js" integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    const APPLICATION = {
+        contextPath: /*[[@{/}]]*/,
+        logos: {
+            dns: /*[[@{/images/logos/dns.png}]]*/,
+            regard: /*[[@{/images/logos/regard.png}]]*/,
+            citilink: /*[[@{/images/logos/citilink.svg}]]*/
+        }
+    };
+    /*]]>*/
+</script>
 <script th:src="@{/scripts/script.js}"></script>

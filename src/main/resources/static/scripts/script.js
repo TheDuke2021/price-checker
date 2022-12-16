@@ -1,14 +1,17 @@
 "use strict"
 
+
 const result = $("#result")[0];
+
+
 
 function createResultItem(URL, photoURL, name, price, shop) {
     const item = document.createElement("div");
     item.classList.add("result-item");
 
-    const itemPhoto = new Image();
+    const itemPhoto = document.createElement("div");
     itemPhoto.classList.add("item-photo");
-    itemPhoto.setAttribute("src", photoURL);
+    itemPhoto.style.backgroundImage = 'url("' + photoURL + '")';
     item.appendChild(itemPhoto);
 
     const itemInfo = document.createElement("div");
@@ -26,7 +29,23 @@ function createResultItem(URL, photoURL, name, price, shop) {
     itemInfoBottomButton.innerHTML = '<i class="bi bi-star"></i>';
     itemInfoBottom.appendChild(itemInfoBottomButton);
 
-//    const itemInfoBottomImg = document.createElement("img");
+    const itemInfoBottomImg = new Image();
+    let logoSrc = "";
+    switch(shop){
+        case "DNS":
+            logoSrc += APPLICATION.logos.dns;
+            break;
+        case "REGARD":
+            logoSrc += APPLICATION.logos.regard;
+            break;
+        case "CITILINK":
+            logoSrc += APPLICATION.logos.citilink;
+            break;
+    }
+    itemInfoBottomImg.src = logoSrc;
+    itemInfoBottomImg.classList.add("item-logo");
+    itemInfoBottom.appendChild(itemInfoBottomImg);
+
     const itemInfoBottomH3 = document.createElement("h3");
     itemInfoBottomH3.classList.add("item-price");
     itemInfoBottomH3.textContent = price;
@@ -95,6 +114,7 @@ function removeLoadingScreen() {
 
 
 $("#searchbar-button").click(function() {
+    this.blur();
     doAjaxPost();
 });
 
@@ -102,5 +122,6 @@ $("#searchbar").keyup(function(event) {
     if(event.keyCode != 13)
         return;
 
+    this.blur();
     doAjaxPost();
 });
