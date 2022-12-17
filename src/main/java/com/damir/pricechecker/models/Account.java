@@ -2,19 +2,16 @@ package com.damir.pricechecker.models;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data
@@ -28,12 +25,28 @@ public class Account implements UserDetails {
     private Long id;
 
     private final String username;
-    private final String password;
+    private String password;
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private final Date registrationDate;
+    @Lob
     private byte[] avatar;
-    private List<String> favoriteItems;
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    private List<FavoriteItem> favoriteItems = new ArrayList<>();
+
+    public void addFavoriteItem(FavoriteItem favoriteItem) {
+        favoriteItems.add(favoriteItem);
+    }
+
+    public void removeFavoriteItem(FavoriteItem favoriteItem) {
+        favoriteItems.remove(favoriteItem);
+    }
+
+    public Account(String username, String password, Date registrationDate) {
+        this.username = username;
+        this.password = password;
+        this.registrationDate = registrationDate;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

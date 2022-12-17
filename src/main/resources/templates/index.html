@@ -24,7 +24,7 @@
 		<p style="margin-bottom: 32px;">Приложение проходится по крупнейшим российским Интернет-площадкам и
 			показывает товары по заданному поиску. По умолчанию товары выводятся в порядке убывания цены.
 			Можно вводить как обобщённые слова (монитор, клавиатура, утюг),	так и конкретные модели
-			(RTX 4090, iPhone 12), и таким образом находить, где определённые товары стоят дешевле всего.</p>
+			(RTX 4090, iPhone 12), и таким образом находить, где искомый товар стоит дешевле всего.</p>
 		<div style="position: relative; max-width: 512px; margin-bottom: 64px;">
 			<input id="searchbar" type="text" class="form-control" placeholder="Введите название товара">
 			<button id="searchbar-button"><i class="bi bi-search"></i></button>
@@ -64,4 +64,5 @@
 
 </footer>
 <th:block th:replace="~{fragments/scripts}"></th:block>
+<script th:src="@{/scripts/index.js}"></script>
 <html>

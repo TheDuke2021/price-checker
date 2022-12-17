@@ -14,14 +14,27 @@
     <div class="account-card">
         <div th:if="${account.avatar == null}" class="account-card__photo"
              th:style="'background-image: url(' + @{/images/default_avatar.png} + ');'"></div>
-        <div style="display: flex; flex-flow: column nowrap; justify-content: space-between;">
+        <div th:if="${account.avatar != null}" class="account-card__photo"
+             th:style="'background-image: url(' + 'data:;base64,' + ${accountImage} + ');'"></div>
+        <div style="display: flex; flex-flow: column nowrap; justify-content: space-between; gap: 32px;">
             <div class="account-card__info">
                 <p>Почта: [[${account.username}]]</p>
                 <p>Дата регистрации: [[${#dates.format(account.registrationDate, 'dd.MM.yyyy')}]]</p>
             </div>
             <div class="account-card__settings">
-                <a href="#">Сменить пароль</a>
-                <a href="#">Сменить аватар</a>
+                <a class="account-card__settings__change-password" href="#">Сменить пароль</a>
+                <form method="POST" id="change-password-form" th:action="@{profile/password}" hidden>
+                    <input id="password" name="password" type="password" class="form-control"
+                           placeholder="Пароль" style="margin-bottom: 16px;">
+                    <input id="confirmPassword" type="password" class="form-control" placeholder="Подтверждение пароля">
+                    <a class="account-card__settings-change-password__cancel" href="#">Отмена</a>
+                    <a class="account-card__settings-change-password__confirm" href="#">Подтвердить</a>
+                </form>
+                <a class="account-card__settings__change-avatar" href="#">Сменить аватар</a>
+                <form method="POST" enctype="multipart/form-data" id="change-avatar-form"
+                      th:action="@{profile/avatar}" hidden>
+                    <input type="file" name="file" />
+                </form>
             </div>
         </div>
     </div>
@@ -32,4 +45,5 @@
 
 </footer>
 <th:block th:replace="~{fragments/scripts}"></th:block>
+<script th:inline="javascript" th:src="@{/scripts/profile.js}"></script>
 <html>

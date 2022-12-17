@@ -92,6 +92,7 @@ function doAjaxPost() {
                 p.textContent = "Нет результатов";
                 result.appendChild(p);
             }
+            $("#searchbar")[0].scrollIntoView(true);
             removeLoadingScreen();
          },
          error: function(e){

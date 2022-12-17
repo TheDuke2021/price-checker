@@ -244,9 +244,9 @@ form > input[type=text],
 form > input[type=password],
 form > input[type=submit] {
     font-family: 'Merriweather', serif;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: normal;
-    letter-spacing: 0.1em;
+    border-radius: 16px;
 }
 
 form > input[type=text],
@@ -260,8 +260,13 @@ form > input[type=submit] {
     border: none;
     background-color: rgba(0, 0, 0, 0.25);
     color: white;
-    border-radius: 16px;
     padding: 8px;
+    width: 200px;
+    transition: all 0.3s ease-out 0s;
+}
+
+form > input[type=submit]:hover {
+    background-color: black;
 }
 
 .error {
@@ -297,4 +302,13 @@ form > input[type=submit] {
 
 .account-card__settings > a {
     display: block;
+}
+
+@media (max-width: 768px) {
+    .account-card__photo {
+        min-width: 128px;
+        min-height: 128px;
+        width: 128px;
+        height: 128px;
+    }
 }
