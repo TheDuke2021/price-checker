@@ -22,9 +22,9 @@ public class PriceCheckerApplication {
 		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
 		options.addArguments("--disable-features=NetworkService");
 		options.addArguments("--dns-prefetch-disable");
-//		options.addArguments("-headless");
+//		options.addArguments("--headless");
 		options.addArguments("--disable-extensions");
-		System.setProperty("webdriver.chrome.driver","src/main/resources/selenium/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\Damir\\Desktop\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver(options);
 		return driver;
 	}

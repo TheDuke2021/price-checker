@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+    <title>PRICE CHECKER</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="logo" style="margin-bottom: 64px;">PRICE CHECKER</h1>
+    <div style="display: flex; justify-content: center; gap: 64px; margin-bottom: 64px;">
+        <a th:href="@{/}">Перейти к поиску</a>
+        <a th:href="@{/logout}">Выйти из аккаунта</a>
+    </div>
+    <div class="account-card">
+        <div th:if="${account.avatar == null}" class="account-card__photo"
+             th:style="'background-image: url(' + @{/images/default_avatar.png} + ');'"></div>
+        <div style="display: flex; flex-flow: column nowrap; justify-content: space-between;">
+            <div class="account-card__info">
+                <p>Почта: [[${account.username}]]</p>
+                <p>Дата регистрации: [[${#dates.format(account.registrationDate, 'dd.MM.yyyy')}]]</p>
+            </div>
+            <div class="account-card__settings">
+                <a href="#">Сменить пароль</a>
+                <a href="#">Сменить аватар</a>
+            </div>
+        </div>
+    </div>
+    <h2 style="margin-bottom: 64px;">Избранные товары</h2>
+</div>
+</body>
+<footer>
+
+</footer>
+<th:block th:replace="~{fragments/scripts}"></th:block>
+<html>

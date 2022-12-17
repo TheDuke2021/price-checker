@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:include="~{fragments/head}">
+<head th:replace="~{fragments/head}">
 	<title>PRICE CHECKER</title>
 </head>
 <body>
@@ -11,12 +11,20 @@
 		<p style="margin-bottom: 32px;">Создайте аккаунт, чтобы добавлять товары в избранное, а также 
 		отслеживать цены на выбранные товары и получать оповещение, когда 
 		стоимость упала до определённого значения.</p>
-		<div style="margin-bottom: 64px;">
-			<a href="#">Войти</a>
-			<a href="#">Зарегистрироваться</a>
+		<div th:if="${authorities.contains(&quot;ROLE_ANONYMOUS&quot;)}"
+			 style="display: flex; justify-content: center; gap: 64px; margin-bottom: 64px;">
+			<a th:href="@{/login}">Войти</a>
+			<a th:href="@{/register}">Зарегистрироваться</a>
+		</div>
+		<div th:if="${authorities.contains(&quot;ROLE_USER&quot;)}"
+			 style="display: flex; justify-content: center; gap: 64px; margin-bottom: 64px;">
+			<a th:href="@{/profile}">Перейти в аккаунт</a>
 		</div>
 		<h2 style="margin-bottom: 32px;">Как это работает?</h2>
-		<p style="margin-bottom: 32px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque viverra consectetur mollis. Nulla facilisi. Phasellus ultricies nulla sit amet tortor pretium facilisis. Curabitur vitae fermentum quam. Etiam convallis eros dolor, vel scelerisque neque auctor quis. Sed venenatis condimentum urna quis egestas. In vitae ligula varius, eleifend enim nec, ornare diam. Aenean libero orci, varius eu ipsum a, feugiat feugiat enim. Duis felis sapien, aliquam vitae scelerisque id, accumsan non nibh.</p>
+		<p style="margin-bottom: 32px;">Приложение проходится по крупнейшим российским Интернет-площадкам и
+			показывает товары по заданному поиску. По умолчанию товары выводятся в порядке убывания цены.
+			Можно вводить как обобщённые слова (монитор, клавиатура, утюг),	так и конкретные модели
+			(RTX 4090, iPhone 12), и таким образом находить, где определённые товары стоят дешевле всего.</p>
 		<div style="position: relative; max-width: 512px; margin-bottom: 64px;">
 			<input id="searchbar" type="text" class="form-control" placeholder="Введите название товара">
 			<button id="searchbar-button"><i class="bi bi-search"></i></button>

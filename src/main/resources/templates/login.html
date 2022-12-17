@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+    <title>PRICE CHECKER</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="logo" style="margin-bottom: 64px;">PRICE CHECKER</h1>
+    <h2 style="margin-bottom: 64px;">Вход в аккаунт</h2>
+    <form method="POST">
+        <input id="username" name="username" type="text" class="form-control" placeholder="Почта" style="margin-bottom: 32px;">
+        <input id="password" name="password" type="password" class="form-control" placeholder="Пароль" style="margin-bottom: 32px;">
+        <p class="error" th:if="${param.error}">Неверный логин или пароль</p>
+        <p style="text-align: center;">Нет аккаунта?</p>
+        <a th:href="@{/register}" style="display: block; margin-bottom: 32px;">Зарегистрируйтесь</a>
+        <input type="submit" value="Войти" />
+    </form>
+</div>
+</body>
+<footer>
+
+</footer>
+<th:block th:replace="~{fragments/scripts}"></th:block>
+<html>

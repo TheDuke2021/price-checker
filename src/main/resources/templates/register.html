@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+    <title>PRICE CHECKER</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="logo" style="margin-bottom: 64px;">PRICE CHECKER</h1>
+    <h2 style="margin-bottom: 64px;">Регистрация</h2>
+    <form method="POST" th:action="@{/register}" th:object="${registrationForm}">
+        <input id="username" name="username" th:field="${registrationForm.username}" type="text" class="form-control" placeholder="Почта" style="margin-bottom: 32px;">
+        <input id="password" name="password" th:field="${registrationForm.password}" type="password" class="form-control" placeholder="Пароль" style="margin-bottom: 32px;">
+<!--        <p class="error" th:if="${#fields.hasErrors('duplicateUsername')}" th:text="${err}" />-->
+        <p class="error" th:if="${#fields.hasErrors('username')}"></p>
+        <p style="text-align: center;">Уже есть аккаунт?</p>
+        <a th:href="@{/login}" style="display: block; margin-bottom: 32px;">Войдите</a>
+        <input type="submit" value="Зарегистрироваться" />
+    </form>
+</div>
+</body>
+<footer>
+
+</footer>
+<th:block th:replace="~{fragments/scripts}"></th:block>
+<html>
