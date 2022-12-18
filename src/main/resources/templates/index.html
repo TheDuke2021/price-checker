@@ -29,7 +29,7 @@
 			<input id="searchbar" type="text" class="form-control" placeholder="Введите название товара">
 			<button id="searchbar-button"><i class="bi bi-search"></i></button>
 		</div>
-		<div id="result">
+		<div class="result">
 <!--			<div class="result-item">
 				<img class="item-photo" th:src="@{/images/videocard.jpg}"/>
 				<div class="result-item__info">
@@ -60,9 +60,8 @@
 		<span class="visually-hidden">Loading...</span>
 	</div>
 </body>
-<footer>
-
-</footer>
+<footer th:replace="~{fragments/footer}"></footer>
+<th:block th:replace="~{fragments/toasts}"></th:block>
 <th:block th:replace="~{fragments/scripts}"></th:block>
 <script th:src="@{/scripts/index.js}"></script>
 <html>

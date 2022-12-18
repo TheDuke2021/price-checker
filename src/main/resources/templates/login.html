@@ -12,14 +12,12 @@
         <input id="username" name="username" type="text" class="form-control" placeholder="Почта" style="margin-bottom: 32px;">
         <input id="password" name="password" type="password" class="form-control" placeholder="Пароль" style="margin-bottom: 32px;">
         <p class="error" th:if="${param.error}">Неверный логин или пароль</p>
-        <p style="text-align: center; margin-bottom: 8px;">Нет аккаунта?</p>
-        <a th:href="@{/register}" style="display: block; margin-bottom: 32px;">Зарегистрируйтесь</a>
+        <p style="color: var(--secondary); text-align: center; margin-bottom: 8px;">Нет аккаунта?</p>
+        <a th:href="@{/register}" style="display: block; margin-bottom: 8px;">Зарегистрироваться</a>
+        <a th:href="@{/}" style="display: block; margin-bottom: 32px;">Перейти к поиску</a>
         <input type="submit" value="Войти" />
     </form>
 </div>
 </body>
-<footer>
-
-</footer>
 <th:block th:replace="~{fragments/scripts}"></th:block>
 <html>

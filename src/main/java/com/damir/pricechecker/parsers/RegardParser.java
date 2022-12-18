@@ -5,37 +5,32 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class RegardParser extends Parser{
 
 
-    public RegardParser(WebDriver webDriver) {
-        super("https://www.regard.ru/", "https://www.regard.ru/catalog?search=", "%20", webDriver);
+    public RegardParser() {
+        super("https://www.regard.ru", "https://www.regard.ru/catalog?search=", "%20");
     }
 
     @Override
     public List<Item> parse(String queryParameter) {
         ArrayList<Item> itemList = new ArrayList<>();
         queryParameter = queryParameter.replaceAll("\\+", splitter);
-        webDriver.get(URL + queryParameter);
-
-        //Scrolling page to load product photos
-/*        try{
-            for(int i = 0; i < 5; i++) {
-                ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(0,500)");
-                Thread.sleep(150);
-            }
-        }catch(InterruptedException e) {
-            //TODO
-        }*/
 
         //Parsing document
-        Document doc = Jsoup.parse(webDriver.getPageSource());
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(URL + queryParameter).get();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             Elements htmlItems = doc.getElementsByClass("rendererWrapper").first().firstElementChild().firstElementChild().children();
             for (int i = 0; i < MAX_COUNT; i++) {
@@ -56,7 +51,6 @@ public class RegardParser extends Parser{
             }
             return itemList;
         }catch (Exception e) {
-//            e.printStackTrace();
             if(!itemList.isEmpty())
                 return itemList;
 

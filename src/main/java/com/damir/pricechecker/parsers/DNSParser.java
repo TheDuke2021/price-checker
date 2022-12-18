@@ -1,28 +1,28 @@
 package com.damir.pricechecker.parsers;
 
 import com.damir.pricechecker.models.Item;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DNSParser extends Parser{
 
 
-    public DNSParser(WebDriver webDriver) {
-        super("https://www.dns-shop.ru", "https://www.dns-shop.ru/search/?q=", "+", webDriver);
+    public DNSParser() {
+        super("https://www.dns-shop.ru", "https://www.dns-shop.ru/search/?q=", "+");
     }
 
     @Override
     public List<Item> parse(String queryParameter) {
         ArrayList<Item> itemList = new ArrayList<>();
         queryParameter = queryParameter.replaceAll("\\+", splitter);
-        webDriver.get(URL + queryParameter);
+/*        webDriver.get(URL + queryParameter);
 
         //Scrolling page to load product photos
         try{
@@ -32,10 +32,21 @@ public class DNSParser extends Parser{
             }
         }catch(InterruptedException e) {
             //TODO
-        }
+        }*/
 
         //Parsing document
-        Document doc = Jsoup.parse(webDriver.getPageSource());
+        Document doc = null;
+        try {
+            HttpURLConnection connection = (HttpURLConnection) (new URL(URL + queryParameter).openConnection());
+            connection.setRequestMethod("GET");
+            connection.setInstanceFollowRedirects(false);
+            System.out.println("RESPONSE CODE: " + connection.getResponseCode());
+//            String location = connection.getHeaderField("Location");
+//            doc = Jsoup.connect(location).get();
+//            System.out.println(doc);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             Elements htmlItems = doc.getElementsByClass("catalog-products").first().children();
             for (int i = 0; i < MAX_COUNT; i++) {

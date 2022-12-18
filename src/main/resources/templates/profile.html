@@ -39,11 +39,13 @@
         </div>
     </div>
     <h2 style="margin-bottom: 64px;">Избранные товары</h2>
+    <div class="result">
+        <p th:if="${favoriteItems.isEmpty()}"
+           style="text-align: center; color: var(--secondary);">У вас нет никаких избранных товаров</p>
+    </div>
 </div>
 </body>
-<footer>
-
-</footer>
+<th:block th:replace="~{fragments/toasts}"></th:block>
 <th:block th:replace="~{fragments/scripts}"></th:block>
 <script th:inline="javascript" th:src="@{/scripts/profile.js}"></script>
 <html>

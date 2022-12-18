@@ -3,6 +3,7 @@ package com.damir.pricechecker.controllers;
 import com.damir.pricechecker.data.AccountRepository;
 import com.damir.pricechecker.models.Account;
 import com.damir.pricechecker.models.FavoriteItem;
+import com.damir.pricechecker.models.Item;
 import com.damir.pricechecker.models.RegistrationForm;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,7 +54,7 @@ public class RegistrationController {
         Account accountToSave = new Account(registrationForm.getUsername(),
                 passwordEncoder.encode(registrationForm.getPassword()),
                 new Date());
-        accountToSave.addFavoriteItem(new FavoriteItem(accountToSave.getId(), "https:google.com"));
+//        accountToSave.addFavoriteItem(new FavoriteItem(new Item("ht", "http", "GTX 1660 Super", 5000, Item.Shop.DNS)));
         accountRepository.save(accountToSave);
 
         //Auto login

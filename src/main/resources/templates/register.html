@@ -11,16 +11,12 @@
     <form method="POST" th:action="@{/register}" th:object="${registrationForm}">
         <input id="username" name="username" type="text" class="form-control" placeholder="Почта" style="margin-bottom: 32px;">
         <input id="password" name="password" type="password" class="form-control" placeholder="Пароль" style="margin-bottom: 32px;">
-<!--        <p class="error" th:if="${#fields.hasErrors('duplicateUsername')}" th:text="${err}" />-->
-<!--        <p class="error" th:if="${#fields.hasErrors('username')}"></p>-->
-        <p style="text-align: center; margin-bottom: 8px;">Уже есть аккаунт?</p>
-        <a th:href="@{/login}" style="display: block; margin-bottom: 32px;">Войдите</a>
+        <p style="color:var(--secondary); text-align: center; margin-bottom: 8px;">Уже есть аккаунт?</p>
+        <a th:href="@{/login}" style="display: block; margin-bottom: 8px;">Войти</a>
+        <a th:href="@{/}" style="display: block; margin-bottom: 32px;">Перейти к поиску</a>
         <input type="submit" value="Зарегистрироваться" />
     </form>
 </div>
 </body>
-<footer>
-
-</footer>
 <th:block th:replace="~{fragments/scripts}"></th:block>
 <html>

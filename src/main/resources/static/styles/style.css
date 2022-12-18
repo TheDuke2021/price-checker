@@ -15,6 +15,7 @@
 body {
 	color: white;
 	background-color: var(--dark);
+	font-size: 16px;
 }
 
 a, a:hover {
@@ -23,7 +24,7 @@ a, a:hover {
 
 .logo {
 	font-family: 'Inter', serif;
-	font-size: 64px;
+	font-size: 4em;
 	font-weight: normal;
 }
 
@@ -36,27 +37,27 @@ h1, h3 {
 }
 
 h1 {
-    font-size: 64px;
+    font-size: 4em;
     font-weight: bold;
 }
 
 h2 {
-    font-size: 32px;
+    font-size: 2em;
     font-weight: normal;
 }
 
 h3 {
-    font-size: 24px;
+    font-size: 1.5em;
     font-weight: normal;
 }
 
 h4 {
-    font-size: 24px;
+    font-size: 1.5em;
     font-weight: 200;
 }
 
 p, a {
-    font-size: 16px;
+    font-size: 1em;
     font-weight: normal;
 }
 
@@ -69,40 +70,32 @@ a:hover {
     color: var(--warning);
 }
 
-.underline-white,
-.underline-black {
-	padding: 0 32px 32px 32px;
-}
-
-.underline-white {
-	border-bottom: 2px solid white;
-}
-
-.underline-black {
-	border-bottom: 2px solid black;
-}
-
-/* These lines are needed so that underline on headers shows up correctly */
-h1.underline-white, 
-h2.underline-white, 
-h3.underline-white, 
-h4.underline-white, 
-h5.underline-white, 
-h6.underline-black, 
-h1.underline-black, 
-h2.underline-black, 
-h3.underline-black, 
-h4.underline-black, 
-h5.underline-black, 
-h6.underline-black{
-	display: inline-block;
+.overline {
+	padding: 16px 64px 0px 64px;
+	border-top: 1px solid;
 }
 
 
 /*--------------------------------------------------------------
 # FOOTER
 --------------------------------------------------------------*/
+footer {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    margin: auto;
+    text-align: center;
+    padding: 16px;
+    background-color: rgb(0, 0, 0, 0.25);
+    color: var(--secondary);
+    min-height: 128px;
+}
 
+footer * {
+    margin-bottom: 8px;
+    width: fit-content;
+}
 /*--------------------------------------------------------------
 # Main Section
 --------------------------------------------------------------*/
@@ -123,7 +116,7 @@ h6.underline-black{
 
 #searchbar {
 	font-family: 'Merriweather', serif;
-	font-size: 16px;
+	font-size: 1em;
     font-weight: normal;
 }
 
@@ -133,11 +126,11 @@ h6.underline-black{
     position: absolute;
     color: black;
     font-size: 1.5em;
-    bottom: calc(38px - 1.5em);
-    right: 12px;
+    bottom: 0;
+    right: 0.75rem;
 }
 
-#result {
+.result {
     display: flex;
     flex-flow: column nowrap;
     gap: 32px;
@@ -189,8 +182,8 @@ h6.underline-black{
 }
 
 .item-favorite {
-    height: 48px;
-    width: 48px;
+    height: 1.5em;
+    width: 1.5em;
     border: none;
     border-radius: 8px;
     background-color: var(--dark);
@@ -199,10 +192,9 @@ h6.underline-black{
 }
 
 .item-logo {
-    width: 128px;
+    width: 8em;
     height: auto;
 }
-
 
 #loading-spinner {
     position: fixed;
@@ -219,20 +211,24 @@ h6.underline-black{
   background-color: rgba(0,0,0,0.6);
 }
 
-
-
+/* Adaptation for mobile devices */
 @media (max-width: 768px) {
+
+    body {
+        font-size: 12px;
+    }
+
 	.container {
 		padding: 16px;
-	}
-
-	.result-item {
-	    height: 288px;
 	}
 
 	.item-photo {
         min-width: 80px;
         width: 80px;
+    }
+
+    .result-item__info__bottom {
+        gap: 16px;
     }
 }
 
@@ -244,13 +240,13 @@ form > input[type=text],
 form > input[type=password],
 form > input[type=submit] {
     font-family: 'Merriweather', serif;
-    font-size: 16px;
+    font-size: 1em;
     font-weight: normal;
     border-radius: 16px;
 }
 
 form > input[type=text],
- form > input[type=password] {
+form > input[type=password] {
     margin-right: auto;
     margin-left: auto;
     max-width: 320px;
@@ -262,7 +258,7 @@ form > input[type=submit] {
     color: white;
     padding: 8px;
     width: 200px;
-    transition: all 0.3s ease-out 0s;
+    transition: background-color 0.3s ease-out 0s;
 }
 
 form > input[type=submit]:hover {
@@ -287,17 +283,18 @@ form > input[type=submit]:hover {
 }
 
 .account-card__photo {
-    min-width: 256px;
-    min-height: 256px;
-    width: 256px;
-    height: 256px;
+    min-width: 192px;
+    min-height: 192px;
+    width: 192px;
+    height: 192px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.account-card__info > p {
-    margin: 0;
+.account-card__info > p,
+.account-card__settings > a {
+    margin-bottom: 0;
 }
 
 .account-card__settings > a {

@@ -1,13 +1,9 @@
 package com.damir.pricechecker.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Data
@@ -16,14 +12,19 @@ public class FavoriteItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long itemId;
-
-
     private Long id;
-    private String URL;
 
-    public FavoriteItem(Long id, String URL) {
-        this.id = id;
-        this.URL = URL;
+
+    private Long userId;
+    @Embedded
+    private Item item;
+
+    public FavoriteItem(Long userId, Item item) {
+        this.userId = userId;
+        this.item = item;
+    }
+
+    public FavoriteItem(Item item) {
+        this.item = item;
     }
 }

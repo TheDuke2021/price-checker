@@ -1,65 +1,11 @@
 "use strict"
 
 
-const result = $("#result")[0];
+const result = $(".result")[0];
 
 
 
-function createResultItem(URL, photoURL, name, price, shop) {
-    const item = document.createElement("div");
-    item.classList.add("result-item");
-
-    const itemPhoto = document.createElement("div");
-    itemPhoto.classList.add("item-photo");
-    itemPhoto.style.backgroundImage = 'url("' + photoURL + '")';
-    item.appendChild(itemPhoto);
-
-    const itemInfo = document.createElement("div");
-    itemInfo.classList.add("result-item__info");
-    const itemInfoA = document.createElement("a");
-    itemInfoA.classList.add("item-name");
-    itemInfoA.setAttribute("href", URL);
-    itemInfoA.textContent = name;
-    itemInfo.appendChild(itemInfoA);
-
-    const itemInfoBottom = document.createElement("div");
-    itemInfoBottom.classList.add("result-item__info__bottom");
-    const itemInfoBottomButton = document.createElement("button");
-    itemInfoBottomButton.classList.add("item-favorite");
-    itemInfoBottomButton.innerHTML = '<i class="bi bi-star"></i>';
-    itemInfoBottom.appendChild(itemInfoBottomButton);
-
-    const itemInfoBottomImg = new Image();
-    let logoSrc = "";
-    switch(shop){
-        case "DNS":
-            logoSrc += APPLICATION.logos.dns;
-            break;
-        case "REGARD":
-            logoSrc += APPLICATION.logos.regard;
-            break;
-        case "CITILINK":
-            logoSrc += APPLICATION.logos.citilink;
-            break;
-    }
-    itemInfoBottomImg.src = logoSrc;
-    itemInfoBottomImg.classList.add("item-logo");
-    itemInfoBottom.appendChild(itemInfoBottomImg);
-
-    const itemInfoBottomH3 = document.createElement("h3");
-    itemInfoBottomH3.classList.add("item-price");
-    itemInfoBottomH3.textContent = price;
-    itemInfoBottom.appendChild(itemInfoBottomH3);
-
-    itemInfo.appendChild(itemInfoBottom);
-
-    item.appendChild(itemInfo);
-
-
-    return item;
-}
-
-function doAjaxPost() {
+function getItems() {
 
     setLoadingScreen();
 
@@ -80,7 +26,11 @@ function doAjaxPost() {
                 const URL = response[i].url;
                 const photoURL = response[i].photoURL;
                 const name = response[i].name;
-                const price = response[i].price;
+                let price = response[i].price;
+                if(price == APPLICATION.null_price)
+                    price = "Нет цены";
+                else
+                    price = price.toLocaleString('en-US').replaceAll(",", " ") + "р";
                 const shop = response[i].shop;
                 result.appendChild(createResultItem(URL, photoURL, name, price, shop));
             }
@@ -116,7 +66,7 @@ function removeLoadingScreen() {
 
 $("#searchbar-button").click(function() {
     this.blur();
-    doAjaxPost();
+    getItems();
 });
 
 $("#searchbar").keyup(function(event) {
@@ -124,5 +74,5 @@ $("#searchbar").keyup(function(event) {
         return;
 
     this.blur();
-    doAjaxPost();
+    getItems();
 });

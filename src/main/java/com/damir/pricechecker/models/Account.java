@@ -31,7 +31,8 @@ public class Account implements UserDetails {
     private final Date registrationDate;
     @Lob
     private byte[] avatar;
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private List<FavoriteItem> favoriteItems = new ArrayList<>();
 
     public void addFavoriteItem(FavoriteItem favoriteItem) {

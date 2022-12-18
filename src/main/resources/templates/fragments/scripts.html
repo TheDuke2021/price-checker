@@ -1,4 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.6.2.js" integrity="sha256-pkn2CUZmheSeyssYw3vMp1+xyub4m+e+QK4sQskvuo4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     const APPLICATION = {
@@ -7,7 +8,131 @@
             dns: /*[[@{/images/logos/dns.png}]]*/,
             regard: /*[[@{/images/logos/regard.png}]]*/,
             citilink: /*[[@{/images/logos/citilink.svg}]]*/
-        }
+        },
+        null_price: -1
     };
+
+    const favoriteItems = /*[[${favoriteItems}]]*/;
+    const authorities = /*[[${authorities}]]*/;
+
+
+
+    function isFavoriteItem(URL) {
+        if(favoriteItems == null)
+            return -1;
+
+        for(let i = 0; i < favoriteItems.length; i++) {
+            if(favoriteItems[i].item.url == URL)
+                return favoriteItems[i].id;
+        }
+
+        return -1;
+    }
+
+    function createResultItem(URL, photoURL, name, price, shop) {
+        const item = document.createElement("div");
+        item.classList.add("result-item");
+
+        const itemPhoto = document.createElement("div");
+        itemPhoto.classList.add("item-photo");
+        itemPhoto.style.backgroundImage = 'url("' + photoURL + '")';
+        item.appendChild(itemPhoto);
+
+        const itemInfo = document.createElement("div");
+        itemInfo.classList.add("result-item__info");
+        const itemInfoA = document.createElement("a");
+        itemInfoA.classList.add("item-name");
+        itemInfoA.setAttribute("href", URL);
+        itemInfoA.setAttribute("target", "_blank");
+        itemInfoA.textContent = name;
+        itemInfo.appendChild(itemInfoA);
+
+        const itemInfoBottom = document.createElement("div");
+        itemInfoBottom.classList.add("result-item__info__bottom");
+        const itemInfoBottomButton = document.createElement("button");
+        itemInfoBottomButton.classList.add("item-favorite");
+        itemInfoBottomButton.innerHTML = '<i class="bi bi-star"></i>';
+        const id = isFavoriteItem(URL);
+        if(id == -1) {
+            itemInfoBottomButton.onclick = function() {addFavoriteItem(itemInfoBottomButton, URL, photoURL, name, price, shop);}
+        }
+        else {
+            itemInfoBottomButton.getElementsByTagName("i")[0].classList.remove("bi-star");
+            itemInfoBottomButton.getElementsByTagName("i")[0].classList.add("bi-star-fill");
+            itemInfoBottomButton.onclick = function() {removeFavoriteItem(itemInfoBottomButton, URL, photoURL, name, price, shop, id);}
+        }
+        itemInfoBottom.appendChild(itemInfoBottomButton);
+
+        const itemInfoBottomImg = new Image();
+        let logoSrc = "";
+        switch(shop){
+            case "DNS":
+                logoSrc += APPLICATION.logos.dns;
+                break;
+            case "REGARD":
+                logoSrc += APPLICATION.logos.regard;
+                break;
+            case "CITILINK":
+                logoSrc += APPLICATION.logos.citilink;
+                break;
+        }
+        itemInfoBottomImg.src = logoSrc;
+        itemInfoBottomImg.classList.add("item-logo");
+        itemInfoBottom.appendChild(itemInfoBottomImg);
+
+        const itemInfoBottomH3 = document.createElement("h3");
+        itemInfoBottomH3.classList.add("item-price");
+        itemInfoBottomH3.textContent = price;
+        itemInfoBottom.appendChild(itemInfoBottomH3);
+
+        itemInfo.appendChild(itemInfoBottom);
+
+        item.appendChild(itemInfo);
+
+
+        return item;
+    }
+
+
+    function addFavoriteItem(button, URL, photoURL, name, price, shop) {
+        if(!typeof authorities !== "undefined" && authorities != null && !authorities.includes("ROLE_USER")) {
+            new bootstrap.Toast($("#toast-favorite-log-in")[0]).show();
+            return undefined;
+       }
+        const numberPrice = price.replace(/\D/g,'');
+        const favoriteItem = {"url": URL, "photoURL": photoURL, "name": name, "price": numberPrice, "shop": shop};
+        $.ajax({
+            type: "POST",
+            url: "/favorite-item",
+            data: JSON.stringify(favoriteItem),
+            contentType: "application/json",
+            success: function(response){
+                button.getElementsByTagName("i")[0].classList.remove("bi-star");
+                button.getElementsByTagName("i")[0].classList.add("bi-star-fill");
+                button.onclick = function() { removeFavoriteItem(button, URL, photoURL, name, price, shop, response) };
+                new bootstrap.Toast($("#toast-favorite-added")[0]).show();
+             },
+             error: function(e){
+                 alert('Error: ' + e);
+             }
+        });
+    }
+
+    function removeFavoriteItem(button, URL, photoURL, name, price, shop, id) {
+        $.ajax({
+            type: "DELETE",
+            url: "/favorite-item/" + id,
+            success: function(response){
+                button.getElementsByTagName("i")[0].classList.add("bi-star");
+                button.getElementsByTagName("i")[0].classList.remove("bi-star-fill");
+                button.onclick = function() { addFavoriteItem(button, URL, photoURL, name, price, shop) };
+                new bootstrap.Toast($("#toast-favorite-removed")[0]).show();
+             },
+             error: function(e){
+                 alert('Error: ' + e);
+             }
+        });
+    }
+
     /*]]>*/
 </script>

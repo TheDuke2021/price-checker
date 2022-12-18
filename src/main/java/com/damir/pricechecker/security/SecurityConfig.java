@@ -33,6 +33,7 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests()
                 .requestMatchers("/profile").hasRole("USER")
+                .requestMatchers("/favorite-item/**").hasRole("USER")
                 .requestMatchers("/register").anonymous()
                 .requestMatchers("/login").anonymous()
                 .requestMatchers("/**").permitAll()

@@ -5,7 +5,9 @@ import com.damir.pricechecker.models.Account;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +36,7 @@ public class ProfileController {
         }
 
         model.addAttribute("account", account);
+        model.addAttribute("favoriteItems", account.getFavoriteItems());
 
         return "profile";
     }
@@ -41,8 +44,13 @@ public class ProfileController {
     @PostMapping("/profile/avatar")
     public String updateAvatar(MultipartFile file, Authentication authentication) throws IOException {
         Account account = (Account) authentication.getPrincipal();
-        account.setAvatar(file.getBytes());
-        accountRepository.save(account);
+        Account accountToSave = accountRepository.findByUsername(account.getUsername());
+        accountToSave.setAvatar(file.getBytes());
+        accountRepository.save(accountToSave);
+        SecurityContextHolder.getContext()
+                .setAuthentication(new UsernamePasswordAuthenticationToken(accountToSave,
+                        accountToSave.getPassword(),
+                        accountToSave.getAuthorities()));
         return "redirect:/profile";
     }
 
