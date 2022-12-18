@@ -50,10 +50,8 @@ public class CitilinkParser extends Parser{
             }
             return itemList;
         }catch (Exception e) {
-            if(!itemList.isEmpty())
-                return itemList;
+            return itemList;
 
-            return null;
         }
     }
 }

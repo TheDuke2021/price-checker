@@ -4,7 +4,9 @@ package com.damir.pricechecker.controllers;
 import com.damir.pricechecker.models.Account;
 import com.damir.pricechecker.models.Item;
 import com.damir.pricechecker.parsers.CitilinkParser;
+import com.damir.pricechecker.parsers.DNSParser;
 import com.damir.pricechecker.parsers.RegardParser;
+import com.damir.pricechecker.parsers.WildberriesParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,9 +25,13 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
+    DNSParser dnsParser;
+    @Autowired
     RegardParser regardParser;
     @Autowired
     CitilinkParser citilinkParser;
+    @Autowired
+    WildberriesParser wildBerriesParser;
 
     List<Item> itemList = new ArrayList<>();
 
@@ -50,13 +56,10 @@ public class HomeController {
     public List<Item> processSearchQuery(@RequestBody String queryParameter) {
         itemList.clear();
         queryParameter = queryParameter.substring(queryParameter.indexOf("=") + 1);
-        List<Item> tempList = null;
-//        tempList = citilinkParser.parse(queryParameter);
-        if(tempList != null)
-            itemList.addAll(tempList);
-        tempList = regardParser.parse(queryParameter);
-        if(tempList != null)
-            itemList.addAll(tempList);
+//        itemList.addAll(dnsParser.parse(queryParameter));
+        itemList.addAll(citilinkParser.parse(queryParameter));
+        itemList.addAll(wildBerriesParser.parse(queryParameter));
+        itemList.addAll(regardParser.parse(queryParameter));
 
         Collections.sort(itemList);
         return itemList;

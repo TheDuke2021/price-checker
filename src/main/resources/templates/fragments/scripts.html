@@ -7,7 +7,8 @@
         logos: {
             dns: /*[[@{/images/logos/dns.png}]]*/,
             regard: /*[[@{/images/logos/regard.png}]]*/,
-            citilink: /*[[@{/images/logos/citilink.svg}]]*/
+            citilink: /*[[@{/images/logos/citilink.svg}]]*/,
+            wildberries: /*[[@{/images/logos/wildberries.jpg}]]*/
         },
         null_price: -1
     };
@@ -68,12 +69,23 @@
         switch(shop){
             case "DNS":
                 logoSrc += APPLICATION.logos.dns;
+                itemInfoBottomImg.setAttribute("alt", "ДНС");
+                itemInfoBottomImg.setAttribute("title", "ДНС");
                 break;
             case "REGARD":
                 logoSrc += APPLICATION.logos.regard;
+                itemInfoBottomImg.setAttribute("alt", "Регард");
+                itemInfoBottomImg.setAttribute("title", "Регард");
                 break;
             case "CITILINK":
                 logoSrc += APPLICATION.logos.citilink;
+                itemInfoBottomImg.setAttribute("alt", "Ситилинк");
+                itemInfoBottomImg.setAttribute("title", "Ситилинк");
+                break;
+            case "WILDBERRIES":
+                logoSrc += APPLICATION.logos.wildberries;
+                itemInfoBottomImg.setAttribute("alt", "Вайлдберриз");
+                itemInfoBottomImg.setAttribute("title", "Вайлдберриз");
                 break;
         }
         itemInfoBottomImg.src = logoSrc;

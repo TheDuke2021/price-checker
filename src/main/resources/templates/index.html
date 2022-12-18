@@ -2,15 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head}">
-	<title>PRICE CHECKER</title>
+	<title id="pageTitle">PRICE CHECKER</title>
 </head>
 <body>
 	<div class="container">
 		<h1 class="logo" style="margin-bottom: 64px;">PRICE CHECKER</h1>
 		<h2 style="margin-bottom: 32px;">Личный кабинет</h2>
-		<p style="margin-bottom: 32px;">Создайте аккаунт, чтобы добавлять товары в избранное, а также 
+<!--		<p style="margin-bottom: 32px;">Создайте аккаунт, чтобы добавлять товары в избранное, а также
 		отслеживать цены на выбранные товары и получать оповещение, когда 
-		стоимость упала до определённого значения.</p>
+		стоимость упала до определённого значения.</p>	-->
+		<p style="margin-bottom: 32px;">Создайте аккаунт, чтобы добавлять товары в избранное, а также
+		отслеживать цены на выбранные товары.</p>
 		<div th:if="${authorities.contains(&quot;ROLE_ANONYMOUS&quot;)}"
 			 style="display: flex; justify-content: center; gap: 64px; margin-bottom: 64px;">
 			<a th:href="@{/login}">Войти</a>
@@ -22,7 +24,7 @@
 		</div>
 		<h2 style="margin-bottom: 32px;">Как это работает?</h2>
 		<p style="margin-bottom: 32px;">Приложение проходится по крупнейшим российским Интернет-площадкам и
-			показывает товары по заданному поиску. По умолчанию товары выводятся в порядке убывания цены.
+			показывает товары по заданному поиску. По умолчанию товары выводятся в порядке возрастания цены.
 			Можно вводить как обобщённые слова (монитор, клавиатура, утюг),	так и конкретные модели
 			(RTX 4090, iPhone 12), и таким образом находить, где искомый товар стоит дешевле всего.</p>
 		<div style="position: relative; max-width: 512px; margin-bottom: 64px;">
